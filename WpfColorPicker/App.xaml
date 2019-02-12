@@ -6,6 +6,8 @@
   <Application.Resources>
     <ResourceDictionary>
       <ResourceDictionary.MergedDictionaries>
+        <ResourceDictionary x:Name="a"
+                            Source="pack://application:,,,/WpfColorPicker;component/lang/default.xaml" />
         <!--  FluentWPF Controls  -->
         <ResourceDictionary Source="pack://application:,,,/FluentWPF;component/Styles/Controls.xaml" />
       </ResourceDictionary.MergedDictionaries>
