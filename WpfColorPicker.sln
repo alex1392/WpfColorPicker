@@ -11,6 +11,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FluentWPFSample", "..\..\..
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CycWpfLibrary", "..\CycWpfLibrary\CycWpfLibrary\CycWpfLibrary.csproj", "{DC9B1571-60B9-48D4-A147-24820D8E895B}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CycWpfLibrary.Resources", "..\CycWpfLibrary\CycWpfLibrary.Resources\CycWpfLibrary.Resources.csproj", "{482D004F-7715-41E1-9D47-B00E8D7C9ACC}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -33,6 +35,10 @@ Global
 		{DC9B1571-60B9-48D4-A147-24820D8E895B}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{DC9B1571-60B9-48D4-A147-24820D8E895B}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{DC9B1571-60B9-48D4-A147-24820D8E895B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{482D004F-7715-41E1-9D47-B00E8D7C9ACC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{482D004F-7715-41E1-9D47-B00E8D7C9ACC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{482D004F-7715-41E1-9D47-B00E8D7C9ACC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{482D004F-7715-41E1-9D47-B00E8D7C9ACC}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

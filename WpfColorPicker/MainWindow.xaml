@@ -1,19 +1,24 @@
-﻿<mvvm:ObservableWindow x:Class="WpfColorPicker.MainWindow"
-                       xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-                       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-                       xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-                       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-                       xmlns:fw="clr-namespace:SourceChord.FluentWPF;assembly=FluentWPF"
-                       xmlns:local="clr-namespace:WpfColorPicker"
-                       xmlns:cyc="clr-namespace:CycWpfLibrary;assembly=CycWpfLibrary"
-                       xmlns:mvvm="clr-namespace:CycWpfLibrary.MVVM;assembly=CycWpfLibrary"
-                       xmlns:qc="http://QuickConverter.CodePlex.com/"
-                       mc:Ignorable="d"
-                       Title="{StaticResource MainWindow}"
-                       Height="300"
-                       Width="500"
-                       d:DataContext="{d:DesignInstance local:MainWindow, IsDesignTimeCreatable=True}"
-                       fw:AcrylicWindow.Enabled="True">
+﻿<cyc:ObservableWindow x:Class="WpfColorPicker.MainWindow"
+                      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                      xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+                      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+                      xmlns:fw="clr-namespace:SourceChord.FluentWPF;assembly=FluentWPF"
+                      xmlns:local="clr-namespace:WpfColorPicker"
+                      xmlns:cyc="clr-namespace:CycWpfLibrary;assembly=CycWpfLibrary"
+                      xmlns:qc="http://QuickConverter.CodePlex.com/"
+                      mc:Ignorable="d"
+                      Title="MainWindow"
+                      Height="300"
+                      Width="500"
+                      Name="mainWindow"
+                      Topmost="True"
+                      d:DataContext="{d:DesignInstance local:MainWindow, IsDesignTimeCreatable=True}"
+                      fw:AcrylicWindow.Enabled="True"
+                      MouseUp="mainWindow_MouseUp"
+                      MouseDown="mainWindow_MouseDown"
+                      Loaded="mainWindow_Loaded"
+                      MouseLeave="mainWindow_MouseLeave">
   <Grid Name="gridMain"
         fw:PointerTracker.Enabled="True"
         Background="#01FFFFFF"
@@ -22,34 +27,101 @@
       <ColumnDefinition Width="auto" />
       <ColumnDefinition Width="*" />
     </Grid.ColumnDefinitions>
-    <Grid Name="imageGrid" 
+    <Grid Name="imageGrid"
           Width="150"
           Height="150">
       <Image Source="{Binding ImageSource}" />
-      <Line Name="vLine"
+      <Line Name="vLineB"
             X1="{qc:Binding '$P/2', P={Binding ElementName=imageGrid, Path=ActualWidth}}"
             Y1="0"
             X2="{qc:Binding '$P/2', P={Binding ElementName=imageGrid, Path=ActualWidth}}"
             Y2="{Binding ElementName=imageGrid, Path=ActualHeight}"
-            Stroke="#7F000000"
+            Stroke="Black"
             StrokeThickness="2"
             StrokeDashArray="5 5" />
-      <Line Name="hLine"
+      <Line Name="vLineW"
+            X1="{qc:Binding '$P/2', P={Binding ElementName=imageGrid, Path=ActualWidth}}"
+            Y1="0"
+            X2="{qc:Binding '$P/2', P={Binding ElementName=imageGrid, Path=ActualWidth}}"
+            Y2="{Binding ElementName=imageGrid, Path=ActualHeight}"
+            Stroke="White"
+            StrokeThickness="2"
+            StrokeDashArray="5 5"
+            StrokeDashOffset="5" />
+      <Line Name="hLineB"
             X1="0"
             Y1="{qc:Binding '$P/2', P={Binding ElementName=imageGrid, Path=ActualHeight}}"
             X2="{Binding ElementName=imageGrid, Path=ActualWidth}"
             Y2="{qc:Binding '$P/2', P={Binding ElementName=imageGrid, Path=ActualHeight}}"
-            Stroke="#7F000000"
+            Stroke="Black"
             StrokeThickness="2"
             StrokeDashArray="5 5" />
+      <Line Name="hLineW"
+            X1="0"
+            Y1="{qc:Binding '$P/2', P={Binding ElementName=imageGrid, Path=ActualHeight}}"
+            X2="{Binding ElementName=imageGrid, Path=ActualWidth}"
+            Y2="{qc:Binding '$P/2', P={Binding ElementName=imageGrid, Path=ActualHeight}}"
+            Stroke="White"
+            StrokeThickness="2"
+            StrokeDashArray="5 5"
+            StrokeDashOffset="5" />
     </Grid>
     <StackPanel Grid.Column="1"
-                Orientation="Horizontal">
-      <TextBlock Text="{Binding Rstring}" />
-      <TextBlock Text="{Binding Gstring}" />
-      <TextBlock Text="{Binding Bstring}" />
-      <TextBlock Text="{Binding Astring}" />
+                Orientation="Vertical">
+      <StackPanel.Resources>
+        <Style TargetType="TextBlock">
+          <Setter Property="Margin"
+                  Value="5" />
+        </Style>
+        <Style TargetType="TextBox">
+          <Setter Property="IsReadOnly"
+                  Value="True" />
+          <Setter Property="Margin"
+                  Value="5" />
+          <Setter Property="Width"
+                  Value="33" />
+        </Style>
+        <Style TargetType="StackPanel">
+          <Setter Property="Orientation"
+                  Value="Horizontal" />
+        </Style>
+      </StackPanel.Resources>
+      <Rectangle Width="30"
+                 Height="30"
+                 Stroke="Gray"
+                 StrokeThickness="3"
+                 Margin="5"
+                 Fill="{Binding ColorBrush}" />
+      <StackPanel HorizontalAlignment="Center">
+        <TextBlock Text="X:" />
+        <TextBox Text="{Binding CursorPos.X, Mode=OneWay}" />
+        <TextBlock Text="Y:" />
+        <TextBox Text="{Binding CursorPos.Y, Mode=OneWay}" />
+      </StackPanel>
+      <StackPanel>
+        <TextBlock Text="R:" />
+        <TextBox Text="{Binding R, Mode=OneWay}" />
+        <TextBlock Text="G:" />
+        <TextBox Text="{Binding G, Mode=OneWay}" />
+        <TextBlock Text="B:" />
+        <TextBox Text="{Binding B, Mode=OneWay}" />
+        <TextBlock Text="A:" />
+        <TextBox Text="{Binding A, Mode=OneWay}" />
+      </StackPanel>
+      <StackPanel>
+        <TextBlock Text="Hex:" />
+        <TextBox Text="{Binding HexString, Mode=OneWay}"
+                 Width="65" />
+      </StackPanel>
+      <Button Name="dropperButton"
+              Background="Transparent"
+              BorderBrush="Transparent"
+              Width="30"
+              Height="30"
+              Click="dropperButton_Click">
+        <Image Source="resources/dropper.png" />
+      </Button>
     </StackPanel>
 
   </Grid>
-</mvvm:ObservableWindow>
+</cyc:ObservableWindow>
