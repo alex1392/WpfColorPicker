@@ -24,6 +24,17 @@ namespace WpfColorPicker
     Dropped, // color fixed
     Dropping, //update colors
   }
+  public class Data
+  {
+    public Data(string name, object value)
+    {
+      Name = name;
+      Value = value;
+    }
+    public string Name { get; set; }
+    public object Value { get; set; }
+  }
+
   /// <summary>
   /// MainWindow.xaml 的互動邏輯
   /// </summary>
@@ -57,6 +68,11 @@ namespace WpfColorPicker
     private const int halfLength = length / 2;
 
     public PointWpf CursorPos { get; set; }
+    public Data[] CursorPosSource => new Data[]
+    {
+      new Data("X:", CursorPos.X),
+      new Data("Y:", CursorPos.Y),
+    };
 
     public Image<Bgra, byte> Image { get; set; }
     public BitmapSource ImageSource => Image?.ToBitmapSource();
@@ -65,8 +81,20 @@ namespace WpfColorPicker
     public byte G { get; set; }
     public byte R { get; set; }
     public byte A { get; set; }
-    public SolidColorBrush ColorBrush { get; set; }
+    public Data[] RgbaSource => new Data[]
+    {
+      new Data("R:", R),
+      new Data("G:", G),
+      new Data("B:", B),
+      new Data("A:", A),
+    };
     public string HexString { get; set; }
+    public Data[] HexSource => new Data[]
+    {
+      new Data("Hex:", HexString),
+    };
+
+    public SolidColorBrush ColorBrush { get; set; }
 
     private void Update()
     {
@@ -112,10 +140,6 @@ namespace WpfColorPicker
       State = AppState.Dropping; // Dropped -> Dropping      
     }
 
-    private void mainWindow_MouseUp(object sender, MouseButtonEventArgs e)
-    {
-    }
-
     private void mainWindow_MouseDown(object sender, MouseButtonEventArgs e)
     {
       if (State == AppState.Dropping)
@@ -123,10 +147,6 @@ namespace WpfColorPicker
         State = AppState.Dropped; // Dropping -> Dropped
       }
 
-    }
-
-    private void mainWindow_MouseLeave(object sender, MouseEventArgs e)
-    {
     }
   }
 }

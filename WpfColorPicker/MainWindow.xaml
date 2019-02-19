@@ -15,113 +15,175 @@
                       Topmost="True"
                       d:DataContext="{d:DesignInstance local:MainWindow, IsDesignTimeCreatable=True}"
                       fw:AcrylicWindow.Enabled="True"
-                      MouseUp="mainWindow_MouseUp"
-                      MouseDown="mainWindow_MouseDown"
                       Loaded="mainWindow_Loaded"
-                      MouseLeave="mainWindow_MouseLeave">
+                      MouseDown="mainWindow_MouseDown">
   <Grid Name="gridMain"
         fw:PointerTracker.Enabled="True"
         Background="#01FFFFFF"
         Margin="3">
     <Grid.ColumnDefinitions>
-      <ColumnDefinition Width="auto" />
       <ColumnDefinition Width="*" />
+      <ColumnDefinition Width="auto" />
     </Grid.ColumnDefinitions>
-    <Grid Name="imageGrid"
-          Width="150"
-          Height="150">
-      <Image Source="{Binding ImageSource}" />
-      <Line Name="vLineB"
-            X1="{qc:Binding '$P/2', P={Binding ElementName=imageGrid, Path=ActualWidth}}"
-            Y1="0"
-            X2="{qc:Binding '$P/2', P={Binding ElementName=imageGrid, Path=ActualWidth}}"
-            Y2="{Binding ElementName=imageGrid, Path=ActualHeight}"
-            Stroke="Black"
-            StrokeThickness="2"
-            StrokeDashArray="5 5" />
-      <Line Name="vLineW"
-            X1="{qc:Binding '$P/2', P={Binding ElementName=imageGrid, Path=ActualWidth}}"
-            Y1="0"
-            X2="{qc:Binding '$P/2', P={Binding ElementName=imageGrid, Path=ActualWidth}}"
-            Y2="{Binding ElementName=imageGrid, Path=ActualHeight}"
-            Stroke="White"
-            StrokeThickness="2"
-            StrokeDashArray="5 5"
-            StrokeDashOffset="5" />
-      <Line Name="hLineB"
-            X1="0"
-            Y1="{qc:Binding '$P/2', P={Binding ElementName=imageGrid, Path=ActualHeight}}"
-            X2="{Binding ElementName=imageGrid, Path=ActualWidth}"
-            Y2="{qc:Binding '$P/2', P={Binding ElementName=imageGrid, Path=ActualHeight}}"
-            Stroke="Black"
-            StrokeThickness="2"
-            StrokeDashArray="5 5" />
-      <Line Name="hLineW"
-            X1="0"
-            Y1="{qc:Binding '$P/2', P={Binding ElementName=imageGrid, Path=ActualHeight}}"
-            X2="{Binding ElementName=imageGrid, Path=ActualWidth}"
-            Y2="{qc:Binding '$P/2', P={Binding ElementName=imageGrid, Path=ActualHeight}}"
-            Stroke="White"
-            StrokeThickness="2"
-            StrokeDashArray="5 5"
-            StrokeDashOffset="5" />
-    </Grid>
+    <!--image-->
+    <Viewbox>
+      <Grid Name="imageGrid"
+            Width="150"
+            Height="150">
+        <Image Name="snapshot"
+               Source="{Binding ImageSource}" />
+        <Line Name="vLineB"
+              X1="{qc:Binding '$P/2', P={Binding ElementName=snapshot, Path=ActualWidth}}"
+              Y1="0"
+              X2="{qc:Binding '$P/2', P={Binding ElementName=snapshot, Path=ActualWidth}}"
+              Y2="{Binding ElementName=snapshot, Path=ActualHeight}"
+              Stroke="Black"
+              StrokeThickness="2"
+              StrokeDashArray="5 5" />
+        <Line Name="vLineW"
+              X1="{qc:Binding '$P/2', P={Binding ElementName=snapshot, Path=ActualWidth}}"
+              Y1="0"
+              X2="{qc:Binding '$P/2', P={Binding ElementName=snapshot, Path=ActualWidth}}"
+              Y2="{Binding ElementName=snapshot, Path=ActualHeight}"
+              Stroke="White"
+              StrokeThickness="2"
+              StrokeDashArray="5 5"
+              StrokeDashOffset="5" />
+        <Line Name="hLineB"
+              X1="0"
+              Y1="{qc:Binding '$P/2', P={Binding ElementName=snapshot, Path=ActualHeight}}"
+              X2="{Binding ElementName=snapshot, Path=ActualWidth}"
+              Y2="{qc:Binding '$P/2', P={Binding ElementName=snapshot, Path=ActualHeight}}"
+              Stroke="Black"
+              StrokeThickness="2"
+              StrokeDashArray="5 5" />
+        <Line Name="hLineW"
+              X1="0"
+              Y1="{qc:Binding '$P/2', P={Binding ElementName=snapshot, Path=ActualHeight}}"
+              X2="{Binding ElementName=snapshot, Path=ActualWidth}"
+              Y2="{qc:Binding '$P/2', P={Binding ElementName=snapshot, Path=ActualHeight}}"
+              Stroke="White"
+              StrokeThickness="2"
+              StrokeDashArray="5 5"
+              StrokeDashOffset="5" />
+      </Grid>
+    </Viewbox>
+    <!--data display-->
     <StackPanel Grid.Column="1"
                 Orientation="Vertical">
       <StackPanel.Resources>
-        <Style TargetType="TextBlock">
-          <Setter Property="Margin"
-                  Value="5" />
+        <Style x:Key="TextBlockStyle"
+               TargetType="TextBlock">
+          <Setter Property="VerticalAlignment"
+                  Value="Center" />
         </Style>
-        <Style TargetType="TextBox">
+        <DataTemplate x:Key="NameValueTemplate"
+                      DataType="{x:Type local:Data}">
+          <StackPanel Orientation="Horizontal">
+            <TextBlock Text="{Binding Name}"
+                       Style="{StaticResource TextBlockStyle}"/>
+            <TextBox Text="{Binding Value}" />
+          </StackPanel>
+        </DataTemplate>
+        <Style x:Key="ShortTextBoxStyle"
+               TargetType="TextBox">
           <Setter Property="IsReadOnly"
                   Value="True" />
           <Setter Property="Margin"
                   Value="5" />
           <Setter Property="Width"
                   Value="33" />
+          <Setter Property="VerticalAlignment"
+                  Value="Center" />
         </Style>
-        <Style TargetType="StackPanel">
-          <Setter Property="Orientation"
-                  Value="Horizontal" />
+        <Style TargetType="TextBox"
+               BasedOn="{StaticResource ShortTextBoxStyle}" />
+        <Style TargetType="ListBox">
+          <Setter Property="ItemTemplate"
+                  Value="{StaticResource NameValueTemplate}" />
+          <Setter Property="HorizontalAlignment"
+                  Value="Center" />
+          <Setter Property="Background"
+                  Value="Transparent" />
+          <Setter Property="BorderBrush"
+                  Value="Transparent" />
+        </Style>
+        <Style TargetType="ListBoxItem"
+               BasedOn="{StaticResource {x:Type ListBoxItem}}">
+          <Setter Property="Template">
+            <Setter.Value>
+              <ControlTemplate TargetType="ListBoxItem">
+                <Border BorderBrush="{TemplateBinding BorderBrush}"
+                        BorderThickness="{TemplateBinding BorderThickness}"
+                        Background="{TemplateBinding Background}"
+                        Padding="{TemplateBinding Padding}"
+                        SnapsToDevicePixels="true">
+                  <ContentPresenter HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
+                                    SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"
+                                    VerticalAlignment="{TemplateBinding VerticalContentAlignment}" />
+                </Border>
+                <ControlTemplate.Triggers>
+                  <Trigger Property="IsMouseOver"
+                           Value="True">
+                    <Setter Property="Background"
+                            Value="Transparent" />
+                  </Trigger>
+                  <Trigger Property="IsEnabled"
+                           Value="false">
+                    <Setter Property="Foreground"
+                            Value="{DynamicResource {x:Static SystemColors.GrayTextBrushKey}}" />
+                  </Trigger>
+                </ControlTemplate.Triggers>
+              </ControlTemplate>
+            </Setter.Value>
+          </Setter>
         </Style>
       </StackPanel.Resources>
-      <Rectangle Width="30"
-                 Height="30"
-                 Stroke="Gray"
-                 StrokeThickness="3"
-                 Margin="5"
-                 Fill="{Binding ColorBrush}" />
-      <StackPanel HorizontalAlignment="Center">
-        <TextBlock Text="X:" />
-        <TextBox Text="{Binding CursorPos.X, Mode=OneWay}" />
-        <TextBlock Text="Y:" />
-        <TextBox Text="{Binding CursorPos.Y, Mode=OneWay}" />
+      <StackPanel Orientation="Horizontal"
+                  HorizontalAlignment="Center">
+        <Rectangle Width="30"
+                   Height="30"
+                   Stroke="Gray"
+                   StrokeThickness="3"
+                   Margin="10,5"
+                   Fill="{Binding ColorBrush}" />
+        <Button Name="dropperButton"
+                Background="Transparent"
+                BorderBrush="Transparent"
+                Width="30"
+                Height="30"
+                Click="dropperButton_Click">
+          <Image Source="resources/dropper.png" />
+        </Button>
       </StackPanel>
-      <StackPanel>
-        <TextBlock Text="R:" />
-        <TextBox Text="{Binding R, Mode=OneWay}" />
-        <TextBlock Text="G:" />
-        <TextBox Text="{Binding G, Mode=OneWay}" />
-        <TextBlock Text="B:" />
-        <TextBox Text="{Binding B, Mode=OneWay}" />
-        <TextBlock Text="A:" />
-        <TextBox Text="{Binding A, Mode=OneWay}" />
-      </StackPanel>
-      <StackPanel>
-        <TextBlock Text="Hex:" />
-        <TextBox Text="{Binding HexString, Mode=OneWay}"
-                 Width="65" />
-      </StackPanel>
-      <Button Name="dropperButton"
-              Background="Transparent"
-              BorderBrush="Transparent"
-              Width="30"
-              Height="30"
-              Click="dropperButton_Click">
-        <Image Source="resources/dropper.png" />
-      </Button>
+      <ListBox ItemsSource="{Binding CursorPosSource}">
+        <ListBox.ItemsPanel>
+          <ItemsPanelTemplate>
+            <StackPanel Orientation="Horizontal" />
+          </ItemsPanelTemplate>
+        </ListBox.ItemsPanel>
+      </ListBox>
+      <ListBox ItemsSource="{Binding RgbaSource}">
+        <ListBox.ItemsPanel>
+          <ItemsPanelTemplate>
+            <StackPanel Orientation="Vertical" />
+          </ItemsPanelTemplate>
+        </ListBox.ItemsPanel>
+      </ListBox>
+      <ListBox ItemsSource="{Binding HexSource}">
+        <ListBox.ItemsPanel>
+          <ItemsPanelTemplate>
+            <Grid />
+          </ItemsPanelTemplate>
+        </ListBox.ItemsPanel>
+        <ListBox.Resources>
+          <Style TargetType="TextBox"
+                 BasedOn="{StaticResource ShortTextBoxStyle}">
+            <Setter Property="Width"
+                    Value="65" />
+          </Style>
+        </ListBox.Resources>
+      </ListBox>
     </StackPanel>
-
   </Grid>
 </cyc:ObservableWindow>
