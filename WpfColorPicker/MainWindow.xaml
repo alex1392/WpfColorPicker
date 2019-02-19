@@ -10,17 +10,16 @@
                       mc:Ignorable="d"
                       Title="MainWindow"
                       Height="300"
-                      Width="500"
-                      Name="mainWindow"
+                      Width="420"
+                      Name="ColorPicker"
                       Topmost="True"
                       d:DataContext="{d:DesignInstance local:MainWindow, IsDesignTimeCreatable=True}"
                       fw:AcrylicWindow.Enabled="True"
                       Loaded="mainWindow_Loaded"
                       MouseDown="mainWindow_MouseDown">
   <Grid Name="gridMain"
-        fw:PointerTracker.Enabled="True"
-        Background="#01FFFFFF"
-        Margin="3">
+        Background="Black"
+        Margin="5">
     <Grid.ColumnDefinitions>
       <ColumnDefinition Width="*" />
       <ColumnDefinition Width="auto" />
@@ -30,8 +29,11 @@
       <Grid Name="imageGrid"
             Width="150"
             Height="150">
-        <Image Name="snapshot"
-               Source="{Binding ImageSource}" />
+        <Button Name="snapshot"
+                Style="{StaticResource ButtonRevealStyle}">
+        <Image Source="{Binding ImageSource}" />
+          
+        </Button>
         <Line Name="vLineB"
               X1="{qc:Binding '$P/2', P={Binding ElementName=snapshot, Path=ActualWidth}}"
               Y1="0"
@@ -72,30 +74,40 @@
     <StackPanel Grid.Column="1"
                 Orientation="Vertical">
       <StackPanel.Resources>
-        <Style x:Key="TextBlockStyle"
-               TargetType="TextBlock">
+        <Style x:Key="LabelButtonStyle"
+               TargetType="Button"
+               BasedOn="{StaticResource ButtonRevealStyle}">
           <Setter Property="VerticalAlignment"
                   Value="Center" />
+          <Setter Property="Width"
+                  Value="20" />
+          <Setter Property="Height"
+                  Value="26.5" />
+        </Style>
+        <Style x:Key="ShortTextBoxStyle"
+               TargetType="TextBox"
+               BasedOn="{StaticResource TextBoxRevealStyle}">
+          <Setter Property="IsReadOnly"
+                  Value="True" />
+          <Setter Property="Width"
+                  Value="45" />
+          <Setter Property="Height"
+                  Value="26.5" />
+          <Setter Property="HorizontalContentAlignment"
+                  Value="Center" />
+          <Setter Property="VerticalAlignment"
+                  Value="Center" />
+          <Setter Property="Padding"
+                  Value="2" />
         </Style>
         <DataTemplate x:Key="NameValueTemplate"
                       DataType="{x:Type local:Data}">
           <StackPanel Orientation="Horizontal">
-            <TextBlock Text="{Binding Name}"
-                       Style="{StaticResource TextBlockStyle}"/>
+            <Button Content="{Binding Name}"
+                    Style="{StaticResource LabelButtonStyle}" />
             <TextBox Text="{Binding Value}" />
           </StackPanel>
         </DataTemplate>
-        <Style x:Key="ShortTextBoxStyle"
-               TargetType="TextBox">
-          <Setter Property="IsReadOnly"
-                  Value="True" />
-          <Setter Property="Margin"
-                  Value="5" />
-          <Setter Property="Width"
-                  Value="33" />
-          <Setter Property="VerticalAlignment"
-                  Value="Center" />
-        </Style>
         <Style TargetType="TextBox"
                BasedOn="{StaticResource ShortTextBoxStyle}" />
         <Style TargetType="ListBox">
@@ -107,6 +119,8 @@
                   Value="Transparent" />
           <Setter Property="BorderBrush"
                   Value="Transparent" />
+          <Setter Property="fw:PointerTracker.Enabled"
+                  Value="True" />
         </Style>
         <Style TargetType="ListBoxItem"
                BasedOn="{StaticResource {x:Type ListBoxItem}}">
@@ -140,18 +154,24 @@
         </Style>
       </StackPanel.Resources>
       <StackPanel Orientation="Horizontal"
-                  HorizontalAlignment="Center">
-        <Rectangle Width="30"
-                   Height="30"
-                   Stroke="Gray"
-                   StrokeThickness="3"
-                   Margin="10,5"
-                   Fill="{Binding ColorBrush}" />
+                  HorizontalAlignment="Center"
+                  fw:PointerTracker.Enabled="True">
+        <Button Name="colorButton"
+                Width="30"
+                Height="30"
+                Margin="10,5"
+                Style="{StaticResource ButtonRevealStyle}">
+          <Rectangle Stroke="Gray"
+                     Width="{Binding ElementName=colorButton, Path=ActualWidth}"
+                     Height="{Binding ElementName=colorButton, Path=ActualHeight}"
+                     Fill="{Binding ColorBrush}" />
+        </Button>
         <Button Name="dropperButton"
                 Background="Transparent"
                 BorderBrush="Transparent"
                 Width="30"
                 Height="30"
+                Style="{StaticResource ButtonRevealStyle}"
                 Click="dropperButton_Click">
           <Image Source="resources/dropper.png" />
         </Button>
@@ -176,13 +196,18 @@
             <Grid />
           </ItemsPanelTemplate>
         </ListBox.ItemsPanel>
-        <ListBox.Resources>
-          <Style TargetType="TextBox"
-                 BasedOn="{StaticResource ShortTextBoxStyle}">
-            <Setter Property="Width"
-                    Value="65" />
-          </Style>
-        </ListBox.Resources>
+        <ListBox.ItemTemplate>
+          <DataTemplate DataType="{x:Type local:Data}">
+            <StackPanel Orientation="Horizontal">
+              <Button Content="{Binding Name}"
+                     Style="{StaticResource LabelButtonStyle}"
+                     Width="35"/>
+              <TextBox Text="{Binding Value}"
+                       Style="{StaticResource ShortTextBoxStyle}"
+                       Width="82" />
+            </StackPanel>
+          </DataTemplate>
+        </ListBox.ItemTemplate>
       </ListBox>
     </StackPanel>
   </Grid>

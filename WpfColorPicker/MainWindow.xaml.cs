@@ -134,7 +134,7 @@ namespace WpfColorPicker
         }
       }
     }
-    private static readonly Cursor cursorDropper = new Bitmap(Application.GetResourceStream(new Uri("resources/dropper.png", UriKind.RelativeOrAbsolute)).Stream).ToCursor(new PointWpf(0.5, 0.5));
+    private static readonly Cursor cursorDropper = new Bitmap(Application.GetResourceStream(new Uri("resources/dropper.png", UriKind.RelativeOrAbsolute)).Stream).ToCursor(new PointWpf(0.125, 0.75));
     private void dropperButton_Click(object sender, RoutedEventArgs e)
     {
       State = AppState.Dropping; // Dropped -> Dropping      
