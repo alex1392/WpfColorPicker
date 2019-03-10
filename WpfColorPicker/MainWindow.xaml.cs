@@ -1,6 +1,6 @@
 ﻿using CycWpfLibrary;
 using CycWpfLibrary.Emgu;
-using CycWpfLibrary.Media;
+using CycWpfLibrary.FluentDesign;
 using Emgu.CV;
 using Emgu.CV.Structure;
 using System;
@@ -38,30 +38,42 @@ namespace WpfColorPicker
   /// <summary>
   /// MainWindow.xaml 的互動邏輯
   /// </summary>
-  public partial class MainWindow : ObservableWindow
+  public partial class MainWindow : RevealWindow
   {
     public MainWindow()
     {
       InitializeComponent();
       gridMain.DataContext = this;
-
+      this.Loaded += MainWindow_Loaded;
+      this.MouseDown += MainWindow_MouseDown;
+      this.Deactivated += MainWindow_Deactivated;
+      this.Activated += MainWindow_Activated;
+      
       Task.Run(() =>
       {
         while (true)
         {
-          PointWF posWF = new PointWF();
-          ScreenMethods.GetCursorPos(ref posWF);
-          CursorPos = posWF.ToWpf();
-          Dispatcher.BeginInvoke(new Action(() => Update()));
+          if (IsActivated)
+          {
+            PointWF posWF = new PointWF();
+            ScreenMethods.GetCursorPos(ref posWF);
+            CursorPos = posWF.ToWpf();
+            Dispatcher.BeginInvoke(new Action(() => Update()));
+          }
 
           Thread.Sleep(50);
         }
       });
     }
 
-    private void mainWindow_Loaded(object sender, RoutedEventArgs e)
+    bool IsActivated;
+    private void MainWindow_Activated(object sender, EventArgs e)
     {
-      State = AppState.Dropping;
+      IsActivated = true;
+    }
+    private void MainWindow_Deactivated(object sender, EventArgs e)
+    {
+      IsActivated = false;
     }
 
     private const int length = 30;
@@ -86,7 +98,6 @@ namespace WpfColorPicker
       new Data("R:", R),
       new Data("G:", G),
       new Data("B:", B),
-      new Data("A:", A),
     };
     public string HexString { get; set; }
     public Data[] HexSource => new Data[]
@@ -98,7 +109,7 @@ namespace WpfColorPicker
 
     private void Update()
     {
-      Image = ScreenMethods.CopyScreen(new Rect(CursorPos.Minus(halfLength), CursorPos.Add(halfLength)));
+      Image = ScreenMethods.CopyScreen(new Rect(CursorPos.Minus(halfLength), CursorPos.Add(halfLength))).ToImage<Bgra, byte>();
       if (State == AppState.Dropped)
         return;
       var data = Image.Data;
@@ -140,13 +151,15 @@ namespace WpfColorPicker
       State = AppState.Dropping; // Dropped -> Dropping      
     }
 
-    private void mainWindow_MouseDown(object sender, MouseButtonEventArgs e)
+    private void MainWindow_MouseDown(object sender, MouseButtonEventArgs e)
     {
       if (State == AppState.Dropping)
-      {
         State = AppState.Dropped; // Dropping -> Dropped
-      }
+    }
 
+    private void MainWindow_Loaded(object sender, RoutedEventArgs e)
+    {
+      State = AppState.Dropping;
     }
   }
 }
