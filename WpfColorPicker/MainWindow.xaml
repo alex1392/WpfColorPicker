@@ -9,208 +9,230 @@
                  xmlns:qc="http://QuickConverter.CodePlex.com/"
                  xmlns:fd="clr-namespace:CycWpfLibrary.FluentDesign;assembly=CycWpfLibrary.FluentDesign"
                  mc:Ignorable="d"
-                 Title="MainWindow"
-                 Height="300"
-                 Width="420"
+                 d:DataContext="{d:DesignInstance local:MainWindow, IsDesignTimeCreatable=True}"
+                 Title="ColorPicker"
                  Name="ColorPicker"
-                 d:DataContext="{d:DesignInstance local:MainWindow, IsDesignTimeCreatable=True}">
+                 Icon="resources/dropper.png"
+                 Height="300"
+                 Width="420">
   <Window.Resources>
     <Style TargetType="ToolTip"
            BasedOn="{StaticResource RevealTooltipStyle}" />
   </Window.Resources>
-  <Grid Name="gridMain">
-    <Grid.ColumnDefinitions>
-      <ColumnDefinition Width="*" />
-      <ColumnDefinition Width="auto" />
-    </Grid.ColumnDefinitions>
-    <!--image-->
-    <Viewbox>
-      <Grid Name="imageGrid"
-            Width="150"
-            Height="150">
-        <Button Name="snapshot"
-                Style="{StaticResource ButtonRevealStyle}">
-          <Image Source="{Binding ImageSource}" />
+  <Viewbox>
+    <Grid Name="gridMain">
+      <Grid.ColumnDefinitions>
+        <ColumnDefinition Width="*" />
+        <ColumnDefinition Width="auto" />
+      </Grid.ColumnDefinitions>
+      <!--image-->
+      <Viewbox>
+        <Grid Name="imageGrid"
+              Width="150"
+              Height="150">
+          <Button Name="snapshot"
+                  Style="{StaticResource ButtonRevealStyle}">
+            <Image Source="{Binding ImageSource}" />
 
-        </Button>
-        <Line Name="vLineB"
-              X1="{qc:Binding '$P/2', P={Binding ElementName=snapshot, Path=ActualWidth}}"
-              Y1="0"
-              X2="{qc:Binding '$P/2', P={Binding ElementName=snapshot, Path=ActualWidth}}"
-              Y2="{Binding ElementName=snapshot, Path=ActualHeight}"
-              Stroke="Black"
-              StrokeThickness="2"
-              StrokeDashArray="5 5" />
-        <Line Name="vLineW"
-              X1="{qc:Binding '$P/2', P={Binding ElementName=snapshot, Path=ActualWidth}}"
-              Y1="0"
-              X2="{qc:Binding '$P/2', P={Binding ElementName=snapshot, Path=ActualWidth}}"
-              Y2="{Binding ElementName=snapshot, Path=ActualHeight}"
-              Stroke="White"
-              StrokeThickness="2"
-              StrokeDashArray="5 5"
-              StrokeDashOffset="5" />
-        <Line Name="hLineB"
-              X1="0"
-              Y1="{qc:Binding '$P/2', P={Binding ElementName=snapshot, Path=ActualHeight}}"
-              X2="{Binding ElementName=snapshot, Path=ActualWidth}"
-              Y2="{qc:Binding '$P/2', P={Binding ElementName=snapshot, Path=ActualHeight}}"
-              Stroke="Black"
-              StrokeThickness="2"
-              StrokeDashArray="5 5" />
-        <Line Name="hLineW"
-              X1="0"
-              Y1="{qc:Binding '$P/2', P={Binding ElementName=snapshot, Path=ActualHeight}}"
-              X2="{Binding ElementName=snapshot, Path=ActualWidth}"
-              Y2="{qc:Binding '$P/2', P={Binding ElementName=snapshot, Path=ActualHeight}}"
-              Stroke="White"
-              StrokeThickness="2"
-              StrokeDashArray="5 5"
-              StrokeDashOffset="5" />
-      </Grid>
-    </Viewbox>
-    <!--data display-->
-    <StackPanel Grid.Column="1"
-                Orientation="Vertical">
-      <StackPanel.Resources>
-        <Style x:Key="LabelButtonStyle"
-               TargetType="Button"
-               BasedOn="{StaticResource ButtonRevealStyle}">
-          <Setter Property="VerticalAlignment"
-                  Value="Center" />
-          <Setter Property="Width"
-                  Value="20" />
-          <Setter Property="Height"
-                  Value="26.5" />
-        </Style>
-        <Style x:Key="ShortTextBoxStyle"
-               TargetType="TextBox"
-               BasedOn="{StaticResource TextBoxRevealStyle}">
-          <Setter Property="IsReadOnly"
-                  Value="True" />
-          <Setter Property="Width"
-                  Value="45" />
-          <Setter Property="Height"
-                  Value="26.5" />
-          <Setter Property="HorizontalContentAlignment"
-                  Value="Center" />
-          <Setter Property="VerticalAlignment"
-                  Value="Center" />
-          <Setter Property="Padding"
-                  Value="2" />
-        </Style>
-        <DataTemplate x:Key="NameValueTemplate"
-                      DataType="{x:Type local:Data}">
-          <StackPanel Orientation="Horizontal">
-            <Button Content="{Binding Name}"
-                    Style="{StaticResource LabelButtonStyle}" />
-            <TextBox Text="{Binding Value}" />
-          </StackPanel>
-        </DataTemplate>
-        <Style TargetType="TextBox"
-               BasedOn="{StaticResource ShortTextBoxStyle}" />
-        <Style TargetType="ListBox">
-          <Setter Property="ItemTemplate"
-                  Value="{StaticResource NameValueTemplate}" />
-          <Setter Property="HorizontalAlignment"
-                  Value="Center" />
-          <Setter Property="Background"
-                  Value="Transparent" />
-          <Setter Property="BorderBrush"
-                  Value="Transparent" />
-          <Setter Property="fw:PointerTracker.Enabled"
-                  Value="True" />
-        </Style>
-        <Style TargetType="ListBoxItem"
-               BasedOn="{StaticResource {x:Type ListBoxItem}}">
-          <Setter Property="Template">
-            <Setter.Value>
-              <ControlTemplate TargetType="ListBoxItem">
-                <Border BorderBrush="{TemplateBinding BorderBrush}"
-                        BorderThickness="{TemplateBinding BorderThickness}"
-                        Background="{TemplateBinding Background}"
-                        Padding="{TemplateBinding Padding}"
-                        SnapsToDevicePixels="true">
-                  <ContentPresenter HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
-                                    SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"
-                                    VerticalAlignment="{TemplateBinding VerticalContentAlignment}" />
-                </Border>
-                <ControlTemplate.Triggers>
-                  <Trigger Property="IsMouseOver"
-                           Value="True">
-                    <Setter Property="Background"
-                            Value="Transparent" />
-                  </Trigger>
-                  <Trigger Property="IsEnabled"
-                           Value="false">
-                    <Setter Property="Foreground"
-                            Value="{DynamicResource {x:Static SystemColors.GrayTextBrushKey}}" />
-                  </Trigger>
-                </ControlTemplate.Triggers>
-              </ControlTemplate>
-            </Setter.Value>
-          </Setter>
-        </Style>
-      </StackPanel.Resources>
-      <StackPanel Orientation="Horizontal"
-                  HorizontalAlignment="Center"
-                  fw:PointerTracker.Enabled="True">
-        <Button Name="colorButton"
-                Width="30"
-                Height="30"
-                Margin="10,5"
-                Style="{StaticResource ButtonRevealStyle}">
-          <Rectangle Stroke="Gray"
-                     Width="{Binding ElementName=colorButton, Path=ActualWidth}"
-                     Height="{Binding ElementName=colorButton, Path=ActualHeight}"
-                     Fill="{Binding ColorBrush}" />
-        </Button>
-        <Button Name="dropperButton"
-                Background="Transparent"
-                BorderBrush="Transparent"
-                Width="30"
-                Height="30"
-                Style="{StaticResource ButtonRevealStyle}"
-                Click="dropperButton_Click">
-          <Image Source="resources/dropper.png" />
-        </Button>
-      </StackPanel>
-      <ListBox ItemsSource="{Binding CursorPosSource}">
-        <ListBox.ItemsPanel>
-          <ItemsPanelTemplate>
-            <StackPanel Orientation="Horizontal" />
-          </ItemsPanelTemplate>
-        </ListBox.ItemsPanel>
-      </ListBox>
-      <ListBox ItemsSource="{Binding RgbaSource}">
-        <ListBox.ItemsPanel>
-          <ItemsPanelTemplate>
-            <StackPanel Orientation="Vertical" />
-          </ItemsPanelTemplate>
-        </ListBox.ItemsPanel>
-      </ListBox>
-      <ListBox ItemsSource="{Binding HexSource}">
-        <ListBox.ItemsPanel>
-          <ItemsPanelTemplate>
-            <Grid />
-          </ItemsPanelTemplate>
-        </ListBox.ItemsPanel>
-        <ListBox.ItemTemplate>
-          <DataTemplate DataType="{x:Type local:Data}">
+          </Button>
+          <Line Name="vLineB"
+                X1="{qc:Binding '$P/2', P={Binding ElementName=snapshot, Path=ActualWidth}}"
+                Y1="0"
+                X2="{qc:Binding '$P/2', P={Binding ElementName=snapshot, Path=ActualWidth}}"
+                Y2="{Binding ElementName=snapshot, Path=ActualHeight}"
+                Stroke="Black"
+                StrokeThickness="2"
+                StrokeDashArray="5 5" />
+          <Line Name="vLineW"
+                X1="{qc:Binding '$P/2', P={Binding ElementName=snapshot, Path=ActualWidth}}"
+                Y1="0"
+                X2="{qc:Binding '$P/2', P={Binding ElementName=snapshot, Path=ActualWidth}}"
+                Y2="{Binding ElementName=snapshot, Path=ActualHeight}"
+                Stroke="White"
+                StrokeThickness="2"
+                StrokeDashArray="5 5"
+                StrokeDashOffset="5" />
+          <Line Name="hLineB"
+                X1="0"
+                Y1="{qc:Binding '$P/2', P={Binding ElementName=snapshot, Path=ActualHeight}}"
+                X2="{Binding ElementName=snapshot, Path=ActualWidth}"
+                Y2="{qc:Binding '$P/2', P={Binding ElementName=snapshot, Path=ActualHeight}}"
+                Stroke="Black"
+                StrokeThickness="2"
+                StrokeDashArray="5 5" />
+          <Line Name="hLineW"
+                X1="0"
+                Y1="{qc:Binding '$P/2', P={Binding ElementName=snapshot, Path=ActualHeight}}"
+                X2="{Binding ElementName=snapshot, Path=ActualWidth}"
+                Y2="{qc:Binding '$P/2', P={Binding ElementName=snapshot, Path=ActualHeight}}"
+                Stroke="White"
+                StrokeThickness="2"
+                StrokeDashArray="5 5"
+                StrokeDashOffset="5" />
+        </Grid>
+      </Viewbox>
+      <!--data display-->
+      <StackPanel Grid.Column="1"
+                  Orientation="Vertical">
+        <StackPanel.Resources>
+          <Style x:Key="LabelButtonStyle"
+                 TargetType="Button"
+                 BasedOn="{StaticResource ButtonRevealStyle}">
+            <Setter Property="VerticalAlignment"
+                    Value="Center" />
+            <Setter Property="Width"
+                    Value="20" />
+            <Setter Property="Height"
+                    Value="26.5" />
+            <Setter Property="Foreground"
+                    Value="White" />
+          </Style>
+          <Style x:Key="ShortTextBoxStyle"
+                 TargetType="TextBox"
+                 BasedOn="{StaticResource TextBoxRevealStyle}">
+            <Setter Property="IsReadOnly"
+                    Value="True" />
+            <Setter Property="Width"
+                    Value="45" />
+            <Setter Property="Height"
+                    Value="26.5" />
+            <Setter Property="HorizontalContentAlignment"
+                    Value="Center" />
+            <Setter Property="VerticalAlignment"
+                    Value="Center" />
+            <Setter Property="Padding"
+                    Value="2" />
+          </Style>
+          <Style x:Key="ColorTextBoxStyle"
+                 TargetType="TextBox"
+                 BasedOn="{StaticResource ShortTextBoxStyle}">
+            <Setter Property="Background"
+                    Value="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=Grid}, Path=DataContext.DroppedBrush}" />
+            <Setter Property="FontWeight"
+                    Value="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=Grid}, Path=DataContext.DroppedWeight}" />
+          </Style>
+          <DataTemplate x:Key="NameValueTemplate"
+                        DataType="{x:Type local:Data}">
             <StackPanel Orientation="Horizontal">
               <Button Content="{Binding Name}"
-                      Style="{StaticResource LabelButtonStyle}"
-                      Width="35" />
+                      Style="{StaticResource LabelButtonStyle}" />
               <TextBox Text="{Binding Value}"
-                       Style="{StaticResource ShortTextBoxStyle}"
-                       Width="82" />
+                       Style="{StaticResource ShortTextBoxStyle}" />
             </StackPanel>
           </DataTemplate>
-        </ListBox.ItemTemplate>
-      </ListBox>
+          <Style TargetType="ListBox">
+            <Setter Property="ItemTemplate"
+                    Value="{StaticResource NameValueTemplate}" />
+            <Setter Property="HorizontalAlignment"
+                    Value="Center" />
+            <Setter Property="Background"
+                    Value="Transparent" />
+            <Setter Property="BorderBrush"
+                    Value="Transparent" />
+            <Setter Property="fw:PointerTracker.Enabled"
+                    Value="True" />
+          </Style>
+          <Style TargetType="ListBoxItem"
+                 BasedOn="{StaticResource {x:Type ListBoxItem}}">
+            <Setter Property="Template">
+              <Setter.Value>
+                <ControlTemplate TargetType="ListBoxItem">
+                  <Border BorderBrush="{TemplateBinding BorderBrush}"
+                          BorderThickness="{TemplateBinding BorderThickness}"
+                          Background="{TemplateBinding Background}"
+                          Padding="{TemplateBinding Padding}"
+                          SnapsToDevicePixels="true">
+                    <ContentPresenter HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
+                                      SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"
+                                      VerticalAlignment="{TemplateBinding VerticalContentAlignment}" />
+                  </Border>
+                  <ControlTemplate.Triggers>
+                    <Trigger Property="IsMouseOver"
+                             Value="True">
+                      <Setter Property="Background"
+                              Value="Transparent" />
+                    </Trigger>
+                    <Trigger Property="IsEnabled"
+                             Value="false">
+                      <Setter Property="Foreground"
+                              Value="{DynamicResource {x:Static SystemColors.GrayTextBrushKey}}" />
+                    </Trigger>
+                  </ControlTemplate.Triggers>
+                </ControlTemplate>
+              </Setter.Value>
+            </Setter>
+          </Style>
+        </StackPanel.Resources>
+        <StackPanel Orientation="Horizontal"
+                    HorizontalAlignment="Center"
+                    fw:PointerTracker.Enabled="True">
+          <Button Name="colorButton"
+                  Width="30"
+                  Height="30"
+                  Margin="10,5"
+                  Style="{StaticResource ButtonRevealStyle}">
+            <Rectangle Stroke="Gray"
+                       Width="{Binding ElementName=colorButton, Path=ActualWidth}"
+                       Height="{Binding ElementName=colorButton, Path=ActualHeight}"
+                       Fill="{Binding ColorBrush}" />
+          </Button>
+          <Button Name="dropperButton"
+                  Background="Transparent"
+                  BorderBrush="Transparent"
+                  Width="30"
+                  Height="30"
+                  Style="{StaticResource ButtonRevealStyle}"
+                  Click="dropperButton_Click">
+            <Image Source="resources/dropper.png" />
+          </Button>
+        </StackPanel>
+        <ListBox ItemsSource="{Binding CursorPosSource}">
+          <ListBox.ItemsPanel>
+            <ItemsPanelTemplate>
+              <StackPanel Orientation="Horizontal" />
+            </ItemsPanelTemplate>
+          </ListBox.ItemsPanel>
+        </ListBox>
+        <ListBox ItemsSource="{Binding RgbaSource}">
+          <ListBox.ItemsPanel>
+            <ItemsPanelTemplate>
+              <StackPanel Orientation="Vertical" />
+            </ItemsPanelTemplate>
+          </ListBox.ItemsPanel>
+          <ListBox.ItemTemplate>
+            <DataTemplate DataType="{x:Type local:Data}">
+              <StackPanel Orientation="Horizontal">
+                <Button Content="{Binding Name}"
+                        Style="{StaticResource LabelButtonStyle}" />
+                <TextBox Text="{Binding Value}"
+                         Style="{StaticResource ColorTextBoxStyle}" />
+              </StackPanel>
+            </DataTemplate>
+          </ListBox.ItemTemplate>
+        </ListBox>
+        <ListBox ItemsSource="{Binding HexSource}">
+          <ListBox.ItemsPanel>
+            <ItemsPanelTemplate>
+              <Grid />
+            </ItemsPanelTemplate>
+          </ListBox.ItemsPanel>
+          <ListBox.ItemTemplate>
+            <DataTemplate DataType="{x:Type local:Data}">
+              <StackPanel Orientation="Horizontal">
+                <Button Content="{Binding Name}"
+                        Style="{StaticResource LabelButtonStyle}"
+                        Width="35" />
+                <TextBox Text="{Binding Value}"
+                         Style="{StaticResource ColorTextBoxStyle}"
+                         Width="95" />
+              </StackPanel>
+            </DataTemplate>
+          </ListBox.ItemTemplate>
+        </ListBox>
 
-      <Label Name="aa" />
-    </StackPanel>
+        <Label Name="aa" />
+      </StackPanel>
 
-  </Grid>
+    </Grid>
+  </Viewbox>
 </fd:RevealWindow>

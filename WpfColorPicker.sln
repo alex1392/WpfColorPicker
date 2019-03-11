@@ -5,17 +5,9 @@ VisualStudioVersion = 15.0.28010.2016
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WpfColorPicker", "WpfColorPicker\WpfColorPicker.csproj", "{5D100AD6-8518-4F06-A485-3576290FBD20}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FluentWPF", "..\..\..\source\repos\FluentWPF\FluentWPF\FluentWPF.csproj", "{061B1DD9-815B-437F-8CD6-D20923BC0AF4}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FluentWPFSample", "..\..\..\source\repos\FluentWPF\Sample\FluentWPFSample\FluentWPFSample.csproj", "{CCAC5625-C8EE-49C5-8407-ACC8289CCC81}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CycWpfLibrary", "..\CycWpfLibrary\CycWpfLibrary\CycWpfLibrary.csproj", "{DC9B1571-60B9-48D4-A147-24820D8E895B}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CycWpfLibrary.Resources", "..\CycWpfLibrary\CycWpfLibrary.Resources\CycWpfLibrary.Resources.csproj", "{482D004F-7715-41E1-9D47-B00E8D7C9ACC}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CycWpfLibrary.Emgu", "..\CycWpfLibrary\CycWpfLibrary.Emgu\CycWpfLibrary.Emgu.csproj", "{49844F32-A5C8-423F-BBDC-09BFAD908915}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CycWpfLibrary.CustomControls", "..\CycWpfLibrary\CycWpfLibrary.CustomControls\CycWpfLibrary.CustomControls.csproj", "{1B0190C8-083C-4C23-9862-66C520641264}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CycWpfLibrary.FluentDesign", "..\CycWpfLibrary\CycWpfLibrary.FluentDesign\CycWpfLibrary.FluentDesign.csproj", "{F7B31D87-B15A-4048-80FA-B3A571E1CF38}"
 EndProject
@@ -31,30 +23,14 @@ Global
 		{5D100AD6-8518-4F06-A485-3576290FBD20}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{5D100AD6-8518-4F06-A485-3576290FBD20}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{5D100AD6-8518-4F06-A485-3576290FBD20}.Release|Any CPU.Build.0 = Release|Any CPU
-		{061B1DD9-815B-437F-8CD6-D20923BC0AF4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{061B1DD9-815B-437F-8CD6-D20923BC0AF4}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{061B1DD9-815B-437F-8CD6-D20923BC0AF4}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{061B1DD9-815B-437F-8CD6-D20923BC0AF4}.Release|Any CPU.Build.0 = Release|Any CPU
-		{CCAC5625-C8EE-49C5-8407-ACC8289CCC81}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{CCAC5625-C8EE-49C5-8407-ACC8289CCC81}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{CCAC5625-C8EE-49C5-8407-ACC8289CCC81}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{CCAC5625-C8EE-49C5-8407-ACC8289CCC81}.Release|Any CPU.Build.0 = Release|Any CPU
 		{DC9B1571-60B9-48D4-A147-24820D8E895B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{DC9B1571-60B9-48D4-A147-24820D8E895B}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{DC9B1571-60B9-48D4-A147-24820D8E895B}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{DC9B1571-60B9-48D4-A147-24820D8E895B}.Release|Any CPU.Build.0 = Release|Any CPU
-		{482D004F-7715-41E1-9D47-B00E8D7C9ACC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{482D004F-7715-41E1-9D47-B00E8D7C9ACC}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{482D004F-7715-41E1-9D47-B00E8D7C9ACC}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{482D004F-7715-41E1-9D47-B00E8D7C9ACC}.Release|Any CPU.Build.0 = Release|Any CPU
 		{49844F32-A5C8-423F-BBDC-09BFAD908915}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{49844F32-A5C8-423F-BBDC-09BFAD908915}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{49844F32-A5C8-423F-BBDC-09BFAD908915}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{49844F32-A5C8-423F-BBDC-09BFAD908915}.Release|Any CPU.Build.0 = Release|Any CPU
-		{1B0190C8-083C-4C23-9862-66C520641264}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{1B0190C8-083C-4C23-9862-66C520641264}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{1B0190C8-083C-4C23-9862-66C520641264}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{1B0190C8-083C-4C23-9862-66C520641264}.Release|Any CPU.Build.0 = Release|Any CPU
 		{F7B31D87-B15A-4048-80FA-B3A571E1CF38}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{F7B31D87-B15A-4048-80FA-B3A571E1CF38}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{F7B31D87-B15A-4048-80FA-B3A571E1CF38}.Release|Any CPU.ActiveCfg = Release|Any CPU

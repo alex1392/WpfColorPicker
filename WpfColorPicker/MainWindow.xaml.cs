@@ -48,7 +48,8 @@ namespace WpfColorPicker
       this.MouseDown += MainWindow_MouseDown;
       this.Deactivated += MainWindow_Deactivated;
       this.Activated += MainWindow_Activated;
-      
+      this.Closed += MainWindow_Closed;
+
       Task.Run(() =>
       {
         while (true)
@@ -66,7 +67,7 @@ namespace WpfColorPicker
       });
     }
 
-    bool IsActivated;
+    private bool IsActivated;
     private void MainWindow_Activated(object sender, EventArgs e)
     {
       IsActivated = true;
@@ -106,6 +107,8 @@ namespace WpfColorPicker
     };
 
     public SolidColorBrush ColorBrush { get; set; }
+    public SolidColorBrush DroppedBrush { get; set; } = new SolidColorBrush(Colors.Black);
+    public FontWeight DroppedWeight { get; set; } = FontWeight.FromOpenTypeWeight(400); //Normal = 400, Bold = 700
 
     private void Update()
     {
@@ -132,19 +135,43 @@ namespace WpfColorPicker
         {
           case AppState.Dropped:
             dropperButton.IsEnabled = true;
-            ReleaseMouseCapture();
             Cursor = Cursors.AppStarting;
+            DroppedBrush = new SolidColorBrush(ColorWpf.FromArgb(255,249,97,49));
+            DroppedWeight = FontWeight.FromOpenTypeWeight(700);
+            ReleaseMouseCapture();
+            backWindow.Hide();
+            this.Activate();
             break;
           case AppState.Dropping:
             dropperButton.IsEnabled = false;
-            CaptureMouse();
             Cursor = cursorDropper;
+            DroppedBrush = new SolidColorBrush(Colors.LightGray);
+            DroppedWeight = FontWeight.FromOpenTypeWeight(400);
+            CaptureMouse();
+            backWindow.Show();
+            this.Activate();
             break;
           default:
             break;
         }
       }
     }
+
+    private Window backWindow = new Window
+    {
+      AllowsTransparency = true,
+      WindowStyle = WindowStyle.None,
+      WindowState = WindowState.Maximized,
+      Cursor = cursorDropper,
+      Background = new SolidColorBrush(ColorWpf.FromArgb(1,0,0,0)),
+      ShowInTaskbar = false,
+      IsHitTestVisible = false,
+    };
+    private void MainWindow_Closed(object sender, EventArgs e)
+    {
+      backWindow.Close();
+    }
+
     private static readonly Cursor cursorDropper = new Bitmap(Application.GetResourceStream(new Uri("resources/dropper.png", UriKind.RelativeOrAbsolute)).Stream).ToCursor(new PointWpf(0.125, 0.75));
     private void dropperButton_Click(object sender, RoutedEventArgs e)
     {
