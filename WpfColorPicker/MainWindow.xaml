@@ -33,7 +33,6 @@
           <Button Name="snapshot"
                   Style="{StaticResource ButtonRevealStyle}">
             <Image Source="{Binding ImageSource}" />
-
           </Button>
           <Line Name="vLineB"
                 X1="{qc:Binding '$P/2', P={Binding ElementName=snapshot, Path=ActualWidth}}"
@@ -165,8 +164,10 @@
         </StackPanel.Resources>
         <StackPanel Orientation="Horizontal"
                     HorizontalAlignment="Center"
+                    Background="Transparent"
                     fw:PointerTracker.Enabled="True">
           <Button Name="colorButton"
+                  ToolTip="Picked color"
                   Width="30"
                   Height="30"
                   Margin="10,5"
@@ -177,6 +178,7 @@
                        Fill="{Binding ColorBrush}" />
           </Button>
           <Button Name="dropperButton"
+                  ToolTip="Start picking"
                   Background="Transparent"
                   BorderBrush="Transparent"
                   Width="30"
@@ -189,14 +191,16 @@
         <ListBox ItemsSource="{Binding CursorPosSource}">
           <ListBox.ItemsPanel>
             <ItemsPanelTemplate>
-              <StackPanel Orientation="Horizontal" />
+              <StackPanel Orientation="Horizontal"
+                          Background="Transparent" />
             </ItemsPanelTemplate>
           </ListBox.ItemsPanel>
         </ListBox>
         <ListBox ItemsSource="{Binding RgbaSource}">
           <ListBox.ItemsPanel>
             <ItemsPanelTemplate>
-              <StackPanel Orientation="Vertical" />
+              <StackPanel Orientation="Vertical"
+                          Background="Transparent" />
             </ItemsPanelTemplate>
           </ListBox.ItemsPanel>
           <ListBox.ItemTemplate>
@@ -213,7 +217,7 @@
         <ListBox ItemsSource="{Binding HexSource}">
           <ListBox.ItemsPanel>
             <ItemsPanelTemplate>
-              <Grid />
+              <Grid Background="Transparent"/>
             </ItemsPanelTemplate>
           </ListBox.ItemsPanel>
           <ListBox.ItemTemplate>

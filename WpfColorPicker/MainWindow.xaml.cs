@@ -58,8 +58,32 @@ namespace WpfColorPicker
           {
             PointWF posWF = new PointWF();
             ScreenMethods.GetCursorPos(ref posWF);
-            CursorPos = posWF.ToWpf();
-            Dispatcher.BeginInvoke(new Action(() => Update()));
+            var posWpf = posWF.ToWpf();
+            var image = ScreenMethods.CopyScreen(new Rect(CursorPos.Minus(halfLength), CursorPos.Add(halfLength))).ToImage<Bgra, byte>();
+            Dispatcher.BeginInvoke(new Action(() =>
+            {
+              CursorPos = posWpf;
+              Image = image;
+            }));
+
+            if (state != AppState.Dropped)
+            {
+              var data = image.Data;
+              var b = data[halfLength, halfLength, 0];
+              var g = data[halfLength, halfLength, 1];
+              var r = data[halfLength, halfLength, 2];
+              var a = data[halfLength, halfLength, 3];
+              var hex = new byte[] { a, r, g, b }.ToHexString();
+              Dispatcher.BeginInvoke(new Action(() =>
+              {
+                B = b;
+                G = g;
+                R = r;
+                A = a;
+                ColorBrush = new SolidColorBrush(ColorWpf.FromArgb(a, r, g, b));
+                HexString = hex;
+              }));
+            }
           }
 
           Thread.Sleep(50);
@@ -110,20 +134,6 @@ namespace WpfColorPicker
     public SolidColorBrush DroppedBrush { get; set; } = new SolidColorBrush(Colors.Black);
     public FontWeight DroppedWeight { get; set; } = FontWeight.FromOpenTypeWeight(400); //Normal = 400, Bold = 700
 
-    private void Update()
-    {
-      Image = ScreenMethods.CopyScreen(new Rect(CursorPos.Minus(halfLength), CursorPos.Add(halfLength))).ToImage<Bgra, byte>();
-      if (State == AppState.Dropped)
-        return;
-      var data = Image.Data;
-      B = data[halfLength, halfLength, 0];
-      G = data[halfLength, halfLength, 1];
-      R = data[halfLength, halfLength, 2];
-      A = data[halfLength, halfLength, 3];
-      ColorBrush = new SolidColorBrush(ColorWpf.FromArgb(A, R, G, B));
-      HexString = new byte[] { A, R, G, B }.ToHexString();
-    }
-
     private AppState state = default(AppState);
     public AppState State
     {
@@ -136,7 +146,7 @@ namespace WpfColorPicker
           case AppState.Dropped:
             dropperButton.IsEnabled = true;
             Cursor = Cursors.AppStarting;
-            DroppedBrush = new SolidColorBrush(ColorWpf.FromArgb(255,249,97,49));
+            DroppedBrush = new SolidColorBrush(ColorWpf.FromArgb(255, 249, 97, 49));
             DroppedWeight = FontWeight.FromOpenTypeWeight(700);
             ReleaseMouseCapture();
             backWindow.Hide();
@@ -163,7 +173,7 @@ namespace WpfColorPicker
       WindowStyle = WindowStyle.None,
       WindowState = WindowState.Maximized,
       Cursor = cursorDropper,
-      Background = new SolidColorBrush(ColorWpf.FromArgb(1,0,0,0)),
+      Background = new SolidColorBrush(ColorWpf.FromArgb(1, 0, 0, 0)),
       ShowInTaskbar = false,
       IsHitTestVisible = false,
     };
